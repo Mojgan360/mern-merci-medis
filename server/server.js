@@ -1,7 +1,7 @@
 const path = require("path");
 import express from "express";
 const MongoClient = require("mongodb").MongoClient;
-
+import config from "./../config/config";
 import template from "./../template";
 //comment out before building for production
 import devBundle from "./devBundle";
@@ -18,13 +18,12 @@ app.get("/", (req, res) => {
 });
 
 let port = process.env.PORT || 3000;
-app.listen(port, function onStart(err) {
+app.listen(config.port, (err) => {
   if (err) {
     console.log(err);
   }
-  console.info("Server started on port %s.", port);
+  console.info("Server started on port %s.", config.port);
 });
-
 // Database Connection URL
 const url =
   process.env.MONGODB_URI || "mongodb://localhost:27017/mernSimpleSetup";
