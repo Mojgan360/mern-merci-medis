@@ -4,11 +4,11 @@ const MongoClient = require("mongodb").MongoClient;
 import config from "./../config/config";
 import template from "./../template";
 //comment out before building for production
-import devBundle from "./devBundle";
+//import devBundle from "./devBundle";
 
 const app = express();
 //comment out before building for production
-devBundle.compile(app);
+//devBundle.compile(app);
 
 const CURRENT_WORKING_DIR = process.cwd();
 app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
@@ -26,7 +26,9 @@ app.listen(config.port, (err) => {
 });
 // Database Connection URL
 const url =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/mernSimpleSetup";
+  process.env.MONGODB_URI ||
+  "mongodb+srv://merciapp:tomas@cluster0-f2afz.mongodb.net/merciapp?retryWrites=true&w=majority";
+//mongodb+srv://Doris:Tomas@123@cluster0-xmyy0.mongodb.net/<dbname>?retryWrites=true&w=majority
 // Use connect method to connect to the server
 MongoClient.connect(
   url,

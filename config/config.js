@@ -5,7 +5,7 @@ const config = {
   mongoUri:
     process.env.MONGODB_URI ||
     process.env.MONGO_HOST ||
-    "mongodb+srv://Doris:Tomas@123@cluster0-xmyy0.mongodb.net/<dbname>?retryWrites=true&w=majority" +
+    "mongodb+srv://merciapp:tomas@cluster0-f2afz.mongodb.net/merciapp?retryWrites=true&w=majority" +
       (process.env.IP || "localhost") +
       ":" +
       (process.env.MONGO_PORT || "27017") +
