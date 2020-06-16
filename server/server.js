@@ -28,7 +28,7 @@ app.listen(config.port, (err) => {
 const url =
   process.env.MONGODB_URI ||
   "mongodb+srv://merciapp:tomas@cluster0-f2afz.mongodb.net/merciapp?retryWrites=true&w=majority";
-//mongodb+srv://Doris:Tomas@123@cluster0-xmyy0.mongodb.net/<dbname>?retryWrites=true&w=majority
+
 // Use connect method to connect to the server
 MongoClient.connect(
   url,
