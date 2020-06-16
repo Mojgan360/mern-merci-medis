@@ -1,5 +1,8 @@
 import express from "express";
 const app = express();
+import userRoutes from "./routes/user.routes";
+//
+app.use("/", userRoutes);
 /*... configure express ... */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
