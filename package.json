@@ -15,7 +15,7 @@
   "homepage": "https://github.com/Mojgan360/mern-media-merci-app.git",
   "main": "template.js",
   "scripts": {
-    "development": "nodemon",
+    "dev": "nodemon",
     "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
     "start": "SET NODE_ENV=production node ./dist/server.generated.js"
   },
