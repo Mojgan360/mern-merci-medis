@@ -13,9 +13,9 @@
   ],
   "repository": "https://github.com/Mojgan360/mern-media-merci-app.git",
   "homepage": "https://github.com/Mojgan360/mern-media-merci-app.git",
-  "main": "template.js",
+  "main": "./dist/server.generated.js",
   "scripts": {
-    "dev": "nodemon",
+    "development": "nodemon",
     "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
     "start": "SET NODE_ENV=production node ./dist/server.generated.js"
   },
@@ -24,7 +24,8 @@
     "npm": "6.14.4"
   },
   "dependencies": {
-    "@hot-loader/react-dom": "16.13.0",
+    "@hot-loader/react-dom": "^16.13.0",
+    "@material-ui/core": "^4.10.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -36,18 +37,21 @@
     "mongoose": "^5.9.19",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-hot-loader": "4.12.20",
-    "react-router": "^5.2.0"
+    "react-hot-loader": "^4.12.21",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
     "@babel/preset-env": "7.9.0",
-    "@babel/preset-react": "7.9.4",
+    "@babel/preset-react": "^7.9.4",
     "babel-loader": "8.1.0",
+    "file-loader": "^6.0.0",
     "nodemon": "2.0.2",
-    "webpack": "4.42.1",
-    "webpack-cli": "3.3.11",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
     "webpack-dev-middleware": "3.7.2",
+    "webpack-hot-client": "^4.1.2",
     "webpack-hot-middleware": "2.25.0",
     "webpack-node-externals": "1.7.2"
   },
