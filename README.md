@@ -15,4 +15,3 @@
    - To run the application for development, run ```  npm run development  ``` or ``` yarn development ```
 4. Open [localhost:3000](http://localhost:3000/) in the browser
  
-# mern-merci-medis
