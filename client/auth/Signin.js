@@ -1,72 +1,70 @@
-import React from "react";
-import Avatar from "@material-ui/core/Avatar";
+import React, { useState } from "react";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import Icon from "@material-ui/core/Icon";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import auth from "./../auth/auth-helper";
+import { Redirect } from "react-router-dom";
 import { signin } from "./api-auth.js";
 
-//
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  card: {
+    maxWidth: 600,
+    margin: "auto",
+    textAlign: "center",
+    marginTop: theme.spacing(5),
+    paddingBottom: theme.spacing(2),
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+  error: {
+    verticalAlign: "middle",
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+  title: {
+    marginTop: theme.spacing(2),
+    color: theme.palette.openTitle,
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 300,
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: "auto",
+    marginBottom: theme.spacing(2),
   },
 }));
 
-const Signin = (props) => {
-  console.log(props);
-
+export default function Signin(props) {
   const classes = useStyles();
-
-  //
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     email: "",
     password: "",
     error: "",
     redirectToReferrer: false,
   });
-  const { email, password, error } = values;
 
-  const clickSubmit = async () => {
+  const clickSubmit = () => {
     const user = {
-      email: email || undefined,
-      password: password || undefined,
+      email: values.email || undefined,
+      password: values.password || undefined,
     };
 
-    const registeringuser = signin(user);
-    if (!registeringuser) {
-      setValues({ ...values, error: registeringuser.error });
-    } else {
-      await auth.authenticate(registeringuser, () => {
-        setValues({ ...values, error: "", redirectToReferrer: true });
-      });
-    }
+    signin(user).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        auth.authenticate(data, () => {
+          setValues({ ...values, error: "", redirectToReferrer: true });
+        });
+      }
+    });
   };
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+  const handleChange = (name) => (event) => {
+    setValues({ ...values, [name]: event.target.value });
   };
 
   const { from } = props.location.state || {
@@ -74,77 +72,56 @@ const Signin = (props) => {
       pathname: "/",
     },
   };
-
   const { redirectToReferrer } = values;
   if (redirectToReferrer) {
     return <Redirect to={from} />;
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+    <Card className={classes.card}>
+      <CardContent>
+        <Typography variant="h6" className={classes.title}>
+          Sign In
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+        <TextField
+          id="email"
+          type="email"
+          label="Email"
+          className={classes.textField}
+          value={values.email}
+          onChange={handleChange("email")}
+          margin="normal"
+        />
+        <br />
+        <TextField
+          id="password"
+          type="password"
+          label="Password"
+          className={classes.textField}
+          value={values.password}
+          onChange={handleChange("password")}
+          margin="normal"
+        />
+        <br />{" "}
+        {values.error && (
+          <Typography component="p" color="error">
+            <Icon color="error" className={classes.error}>
+              error
+            </Icon>
+            {values.error}
+          </Typography>
+        )}
+      </CardContent>
+      <CardActions>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={clickSubmit}
+          className={classes.submit}
+        >
+          Submit
+        </Button>
+      </CardActions>
+    </Card>
   );
-};
-
-export default Signin;
+}

@@ -28,11 +28,11 @@ const Users = () => {
   const classes = useStyles();
 
   const [users, setUsers] = useState([]);
+  const abortController = new AbortController();
+  const signal = abortController.signal;
 
   useEffect(() => {
     const fetchData = async () => {
-      const abortController = new AbortController();
-      const signal = abortController.signal;
       const userList = await list(signal);
       if (userList && userList.error) {
         console.log(userList.error);
