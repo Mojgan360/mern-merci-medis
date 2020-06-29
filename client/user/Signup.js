@@ -55,19 +55,19 @@ export default function Signup() {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const clickSubmit = () => {
+  const clickSubmit = async () => {
     const user = {
       name: values.name || undefined,
       email: values.email || undefined,
       password: values.password || undefined,
     };
-    create(user).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({ ...values, error: "", open: true });
-      }
-    });
+
+    let newuser = create(user);
+    if (!newuser) {
+      setValues({ ...values, error: newuser.error });
+    } else {
+      await setValues({ ...values, error: "", open: true });
+    }
   };
 
   return (
