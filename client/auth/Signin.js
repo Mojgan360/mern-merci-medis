@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signin = (props) => {
   console.log(props);
+
   const classes = useStyles();
 
   //
@@ -53,16 +54,6 @@ const Signin = (props) => {
       email: email || undefined,
       password: password || undefined,
     };
-
-    // signin(user).then((data) => {
-    //   if (data.error) {
-    //     setValues({ ...values, error: data.error });
-    //   } else {
-    //     auth.authenticate(data, () => {
-    //       setValues({ ...values, error: "", redirectToReferrer: true });
-    //     });
-    //   }
-    // });
 
     const registeringuser = signin(user);
     if (!registeringuser) {
@@ -83,6 +74,7 @@ const Signin = (props) => {
       pathname: "/",
     },
   };
+
   const { redirectToReferrer } = values;
   if (redirectToReferrer) {
     return <Redirect to={from} />;
