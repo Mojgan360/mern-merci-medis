@@ -75,6 +75,10 @@ export default function Profile({ match }) {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={user.name} secondary={user.email} />{" "}
+          <ListItem>
+            {" "}
+            <ListItemText primary={user.about} />{" "}
+          </ListItem>
           {auth.isAuthenticated().user &&
             auth.isAuthenticated().user._id == user._id && (
               <ListItemSecondaryAction>

@@ -1,6 +1,10 @@
 import React from "react";
 import { hydrate } from "react-dom";
 import App from "./App";
+import { preloadReady } from "react-loadable";
 
-//Hydrate instead of render
-hydrate(<App />, document.getElementById("root"));
+window.addEventListener("load", async () => {
+  await preloadReady();
+
+  hydrate(<App />, document.getElementById("root"));
+});
