@@ -26,6 +26,7 @@ const isActive = (history, path) => {
 //The withRouter HOC gives us direct access to a history prop.
 const Menu = withRouter(({ history }) => {
   const classes = useStyles();
+
   return (
     <AppBar className={classes.root} position="static" className={classes.root}>
       <Toolbar>

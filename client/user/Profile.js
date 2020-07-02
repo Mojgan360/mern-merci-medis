@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import Edit from "@material-ui/icons/Edit";
 import Person from "@material-ui/icons/Person";
 import Divider from "@material-ui/core/Divider";
+import DeleteUser from "./DeleteUser";
 import auth from "./../auth/auth-helper";
 import { read } from "./api-user.js";
 import { Redirect, Link } from "react-router-dom";
@@ -47,7 +48,6 @@ export default function Profile({ match }) {
       signal
     ).then((data) => {
       if (data && data.error) {
-        console.log(data.error);
         setRedirectToSignin(true);
       } else {
         setUser(data);
@@ -83,7 +83,7 @@ export default function Profile({ match }) {
                     <Edit />
                   </IconButton>
                 </Link>
-                {/* <DeleteUser userId={user._id} /> */}
+                <DeleteUser userId={user._id} />
               </ListItemSecondaryAction>
             )}
         </ListItem>
