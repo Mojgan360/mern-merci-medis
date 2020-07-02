@@ -14,7 +14,7 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import MainRouter from "./../client/MainRouter";
 import { StaticRouter } from "react-router-dom";
-
+//Material-UI modules and the custom theme
 import { ServerStyleSheets, ThemeProvider } from "@material-ui/styles";
 import theme from "./../client/theme";
 //end
@@ -45,8 +45,10 @@ app.use("/", userRoutes);
 app.use("/", authRoutes);
 
 app.get("*", (req, res) => {
+  //Generating CSS and markup
   const sheets = new ServerStyleSheets();
   const context = {};
+
   const markup = ReactDOMServer.renderToString(
     sheets.collect(
       <StaticRouter location={req.url} context={context}>
@@ -56,6 +58,8 @@ app.get("*", (req, res) => {
       </StaticRouter>
     )
   );
+
+  //Sending a template with markup and CSS
   if (context.url) {
     return res.redirect(303, context.url);
   }
