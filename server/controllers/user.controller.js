@@ -28,7 +28,10 @@ const userByID = async (req, res, next, id) => {
       .populate("following", "_id name")
       .populate("followers", "_id name")
       .exec();
-    if (!user) return res.status("400").json({ error: "User not found" });
+    if (!user)
+      return res.status("400").json({
+        error: "User not found",
+      });
     req.profile = user;
     next();
   } catch (err) {
@@ -122,6 +125,7 @@ const addFollowing = async (req, res, next) => {
     });
   }
 };
+
 const addFollower = async (req, res) => {
   try {
     let result = await User.findByIdAndUpdate(
@@ -141,6 +145,7 @@ const addFollower = async (req, res) => {
     });
   }
 };
+
 const removeFollowing = async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(req.body.userId, {
@@ -172,6 +177,20 @@ const removeFollower = async (req, res) => {
     });
   }
 };
+
+const findPeople = async (req, res) => {
+  let following = req.profile.following;
+  following.push(req.profile._id);
+  try {
+    let users = await User.find({ _id: { $nin: following } }).select("name");
+    res.json(users);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 export default {
   create,
   userByID,
@@ -183,6 +202,7 @@ export default {
   defaultPhoto,
   addFollowing,
   addFollower,
-  removeFollower,
   removeFollowing,
+  removeFollower,
+  findPeople,
 };

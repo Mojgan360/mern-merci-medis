@@ -12,14 +12,6 @@ router
 router.route("/api/users/defaultphoto").get(userCtrl.defaultPhoto);
 
 router
-  .route("/api/users/:userId")
-  .get(authCtrl.requireSignin, userCtrl.read)
-  .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
-  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove);
-
-router.param("userId", userCtrl.userByID);
-
-router
   .route("/api/users/follow")
   .put(authCtrl.requireSignin, userCtrl.addFollowing, userCtrl.addFollower);
 router
@@ -29,5 +21,17 @@ router
     userCtrl.removeFollowing,
     userCtrl.removeFollower
   );
+
+router
+  .route("/api/users/findpeople/:userId")
+  .get(authCtrl.requireSignin, userCtrl.findPeople);
+
+router
+  .route("/api/users/:userId")
+  .get(authCtrl.requireSignin, userCtrl.read)
+  .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
+  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove);
+
+router.param("userId", userCtrl.userByID);
 
 export default router;

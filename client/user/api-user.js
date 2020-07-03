@@ -14,7 +14,6 @@ const create = async (user) => {
   }
 };
 
-//Listing users
 const list = async (signal) => {
   try {
     let response = await fetch("/api/users/", {
@@ -27,12 +26,10 @@ const list = async (signal) => {
   }
 };
 
-//Reading a user profile
 const read = async (params, credentials, signal) => {
   try {
     let response = await fetch("/api/users/" + params.userId, {
       method: "GET",
-      signal: signal,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -45,7 +42,6 @@ const read = async (params, credentials, signal) => {
   }
 };
 
-//Updating a user's data
 const update = async (params, credentials, user) => {
   try {
     let response = await fetch("/api/users/" + params.userId, {
@@ -62,7 +58,6 @@ const update = async (params, credentials, user) => {
   }
 };
 
-//Deleting a user
 const remove = async (params, credentials) => {
   try {
     let response = await fetch("/api/users/" + params.userId, {
@@ -112,6 +107,22 @@ const unfollow = async (params, credentials, unfollowId) => {
     console.log(err);
   }
 };
-//
 
-export { create, list, read, update, remove, follow };
+const findPeople = async (params, credentials, signal) => {
+  try {
+    let response = await fetch("/api/users/findpeople/" + params.userId, {
+      method: "GET",
+      signal: signal,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
+      },
+    });
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { create, list, read, update, remove, follow, unfollow, findPeople };
