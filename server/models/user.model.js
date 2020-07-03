@@ -17,6 +17,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: "Password is required",
   },
+  salt: String,
+  updated: Date,
+  created: {
+    type: Date,
+    default: Date.now,
+  },
   about: {
     type: String,
     trim: true,
@@ -25,12 +31,8 @@ const UserSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
-  salt: String,
-  updated: Date,
-  created: {
-    type: Date,
-    default: Date.now,
-  },
+  following: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
+  followers: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
 });
 
 UserSchema.virtual("password")

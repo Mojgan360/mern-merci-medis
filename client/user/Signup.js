@@ -117,6 +117,7 @@ export default function Signup() {
         </CardContent>
         <CardActions>
           <Button
+            component="div"
             color="primary"
             variant="contained"
             onClick={clickSubmit}
@@ -135,7 +136,12 @@ export default function Signup() {
         </DialogContent>
         <DialogActions>
           <Link to="/signin">
-            <Button color="primary" autoFocus="autoFocus" variant="contained">
+            <Button
+              component="div"
+              color="primary"
+              autoFocus="autoFocus"
+              variant="contained"
+            >
               Sign In
             </Button>
           </Link>

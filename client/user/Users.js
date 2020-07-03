@@ -24,24 +24,22 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.openTitle,
   },
 }));
-const Users = () => {
-  const classes = useStyles();
 
+export default function Users() {
+  const classes = useStyles();
   const [users, setUsers] = useState([]);
-  const abortController = new AbortController();
-  const signal = abortController.signal;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userList = await list(signal);
-      if (userList && userList.error) {
-        console.log(userList.error);
-      } else {
-        setUsers(userList);
-      }
-    };
+    const abortController = new AbortController();
+    const signal = abortController.signal;
 
-    fetchData();
+    list(signal).then((data) => {
+      if (data && data.error) {
+        console.log(data.error);
+      } else {
+        setUsers(data);
+      }
+    });
 
     return function cleanup() {
       abortController.abort();
@@ -76,6 +74,4 @@ const Users = () => {
       </List>
     </Paper>
   );
-};
-
-export default Users;
+}

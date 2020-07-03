@@ -12,7 +12,7 @@ import auth from "./../auth/auth-helper";
 import { remove } from "./api-user.js";
 import { Redirect } from "react-router-dom";
 
-export default function DeleteUser(props) {
+export default function DeleteUser({ userId }) {
   const [open, setOpen] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
@@ -23,7 +23,7 @@ export default function DeleteUser(props) {
   const deleteAccount = () => {
     remove(
       {
-        userId: props.userId,
+        userId: userId,
       },
       { t: jwt.token }
     ).then((data) => {
@@ -43,7 +43,7 @@ export default function DeleteUser(props) {
     return <Redirect to="/" />;
   }
   return (
-    <span>
+    <span component="div">
       <IconButton aria-label="Delete" onClick={clickButton} color="secondary">
         <DeleteIcon />
       </IconButton>

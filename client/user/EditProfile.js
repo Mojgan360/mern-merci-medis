@@ -142,12 +142,17 @@ export default function EditProfile({ match }) {
           type="file"
         />
         <label htmlFor="icon-button-file">
-          <Button variant="contained" color="default" component="span">
+          <Button
+            component="div"
+            variant="contained"
+            color="default"
+            component="span"
+          >
             Upload
             <FileUpload />
           </Button>
         </label>{" "}
-        <span className={classes.filename}>
+        <span component="div" className={classes.filename}>
           {values.photo ? values.photo.name : ""}
         </span>
         <br />
