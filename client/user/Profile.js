@@ -16,8 +16,8 @@ import auth from "./../auth/auth-helper";
 import { read } from "./api-user.js";
 import { Redirect, Link } from "react-router-dom";
 import FollowProfileButton from "./../user/FollowProfileButton";
-//import ProfileTabs from "./../user/ProfileTabs";
-//import { listByUser } from "./../post/api-post.js";
+import ProfileTabs from "./../user/ProfileTabs";
+import { listByUser } from "./../post/api-post.js";
 
 const useStyles = makeStyles((theme) => ({
   root: theme.mixins.gutters({
@@ -95,7 +95,22 @@ export default function Profile({ match }) {
       }
     });
   };
-
+  const loadPosts = (user) => {
+    listByUser(
+      {
+        userId: user,
+      },
+      {
+        t: jwt.token,
+      }
+    ).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setPosts(data);
+      }
+    });
+  };
   const removePost = (post) => {
     const updatedPosts = posts;
     const index = updatedPosts.indexOf(post);
@@ -150,6 +165,11 @@ export default function Profile({ match }) {
           />
         </ListItem>
       </List>
+      <ProfileTabs
+        user={values.user}
+        posts={posts}
+        removePostUpdate={removePost}
+      />
     </Paper>
   );
 }
