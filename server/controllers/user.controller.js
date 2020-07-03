@@ -184,4 +184,5 @@ export default {
   addFollowing,
   addFollower,
   removeFollower,
+  removeFollowing,
 };
