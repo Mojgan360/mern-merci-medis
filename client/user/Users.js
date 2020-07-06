@@ -14,6 +14,9 @@ import Person from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
 import { list } from "./api-user.js";
 
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+
 const useStyles = makeStyles((theme) => ({
   root: theme.mixins.gutters({
     padding: theme.spacing(1),
@@ -45,33 +48,28 @@ export default function Users() {
       abortController.abort();
     };
   }, []);
-
+  const photoUrl = users._id
+    ? `/api/users/photo/${users._id}?${new Date().getTime()}`
+    : "/api/users/defaultphoto";
   return (
-    <Paper className={classes.root} elevation={4}>
-      <Typography variant="h6" className={classes.title}>
-        All Users
-      </Typography>
-      <List dense>
-        {users.map((item, i) => {
+    <div className={classes.root}>
+      <GridList cellHeight={160} className={classes.gridList} cols={4}>
+        {users.map((person, i) => {
           return (
-            <Link to={"/user/" + item._id} key={i}>
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar>
-                    <Person />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={item.name} />
-                <ListItemSecondaryAction>
-                  <IconButton>
-                    <ArrowForward />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            </Link>
+            <GridListTile style={{ height: 120 }} key={i}>
+              <Link to={"/user/" + person._id}>
+                <Avatar
+                  src={"/api/users/photo/" + person._id}
+                  className={classes.bigAvatar}
+                />
+                <Typography className={classes.tileText}>
+                  {person.name}
+                </Typography>
+              </Link>
+            </GridListTile>
           );
         })}
-      </List>
-    </Paper>
+      </GridList>
+    </div>
   );
 }
