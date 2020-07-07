@@ -21,13 +21,13 @@ import theme from "./../client/theme";
 //end
 
 //comment out before building for production
-import devBundle from "./devBundle";
+//import devBundle from "./devBundle";
 
 const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
 
 //comment out before building for production
-devBundle.compile(app);
+//devBundle.compile(app);
 
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
@@ -46,15 +46,7 @@ app.use("/", userRoutes);
 app.use("/", authRoutes);
 app.use("/", postRoutes);
 //
-// // Serve static assets in production
-// if (process.env.NODE_ENV === "production") {
-//   // Set static folder
-//   app.use(express.static("client/build"));
 
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-//   });
-// }
 //
 app.get("*", (req, res) => {
   const sheets = new ServerStyleSheets();
